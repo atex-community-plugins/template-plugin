@@ -12,6 +12,23 @@ In order for the plugin to be available you need to add the configuration depend
   </dependency>
 
 ```
+
+Then you simple create an instance of the service and pass a template name:
+
+```
+final TemplateService service = new TemplateServiceBuilder().create();
+final String templateName = "/mustache/simpleScope.hbs";
+final Map<String, String> scope = Maps.newHashMap();
+scope.put("name", "marco");
+
+final String result = service.execute(templateName, scope);
+```
+
+where `/mustache/simpleScope.hbs` is stored in your resources folder and it may contain a mustache template, for example:
+
+```
+Hello {{name}}
+```
 ## Polopoly Version
 10.16.3-fp3
 
