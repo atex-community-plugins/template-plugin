@@ -8,7 +8,7 @@ In order for the plugin to be available you need to add the configuration depend
   <dependency>
     <groupId>com.atex.plugins</groupId>
     <artifactId>template-plugin</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
   </dependency>
 
 ```
