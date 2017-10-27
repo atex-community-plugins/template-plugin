@@ -26,13 +26,13 @@
 
   <groupId>com.atex.plugins</groupId>
   <artifactId>template-plugin</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.0-java7</version>
   <packaging>jar</packaging>
 
   <scm>
     <developerConnection>scm:git:git@github.com:atex-community-plugins/template-plugin.git</developerConnection>
     <url>https://github.com/atex-community-plugins/template-plugin</url>
-    <tag>HEAD</tag>
+    <tag>java7</tag>
   </scm>
 
   <properties>
@@ -102,7 +102,7 @@
     <dependency>
       <groupId>com.github.spullara.mustache.java</groupId>
       <artifactId>compiler</artifactId>
-      <version>0.9.5</version>
+      <version>0.8.18</version>
     </dependency>
 
 
@@ -133,8 +133,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.5.1</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <source>1.7</source>
+          <target>1.7</target>
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
@@ -205,7 +205,7 @@
             <link>http://docs.oracle.com/javase/7/docs/api/</link>
             <link>http://docs.oracle.com/javaee/1.4/api/</link>
           </links>
-          <javadocVersion>1.8</javadocVersion>
+          <javadocVersion>1.7</javadocVersion>
           <docfilessubdirs>true</docfilessubdirs>
           <maxmemory>512m</maxmemory>
         </configuration>
