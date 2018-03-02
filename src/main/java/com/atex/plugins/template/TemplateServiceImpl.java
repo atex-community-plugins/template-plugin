@@ -1,15 +1,11 @@
 package com.atex.plugins.template;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.nio.charset.Charset;
 import java.util.UUID;
 
-import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 
@@ -21,22 +17,42 @@ import com.github.mustachejava.MustacheFactory;
 public class TemplateServiceImpl implements TemplateService {
 
     @Override
+    public Writer execute(final Writer writer, final TemplateResolver resolver, final String templateName, final Object scope)
+            throws IOException {
+        return execute(writer, resolver, templateName, toArray(scope));
+    }
+
+    @Override
+    public Writer execute(final Writer writer, final TemplateResolver resolver, final String templateName, final Object[] scopes)
+            throws IOException {
+        return execute_internal(writer, resolver, templateName, scopes);
+    }
+
+    @Override
+    public String execute(final TemplateResolver resolver, final String templateName, final Object scope)
+            throws IOException {
+        return execute(resolver, templateName, toArray(scope));
+    }
+
+    @Override
+    public String execute(final TemplateResolver resolver, final String templateName, final Object[] scopes)
+            throws IOException {
+        return execute(new StringWriter(), resolver, templateName, scopes).toString();
+    }
+
+    @Override
     public Writer execute(final Writer writer, final String templateName, final Object scope) throws IOException {
-        try (final Reader reader = getTemplate(templateName)) {
-            return execute_internal(writer, reader, templateName, scope);
-        }
+        return execute(writer, new DefaultTemplateResolver(), templateName, scope);
     }
 
     @Override
     public Writer execute(final Writer writer, final String templateName, final Object[] scopes) throws IOException {
-        try (final Reader reader = getTemplate(templateName)) {
-            return execute_internal(writer, reader, templateName, scopes);
-        }
+        return execute(writer, new DefaultTemplateResolver(), templateName, scopes);
     }
 
     @Override
     public String execute(final String templateName, final Object scope) throws IOException {
-        return execute(new StringWriter(), templateName, scope).toString();
+        return execute(templateName, toArray(scope));
     }
 
     @Override
@@ -46,7 +62,7 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Override
     public String execute(final Reader reader, final Object scope) throws IOException {
-        return execute_internal(new StringWriter(), reader, UUID.randomUUID().toString(), scope).toString();
+        return execute(reader, toArray(scope));
     }
 
     @Override
@@ -54,24 +70,24 @@ public class TemplateServiceImpl implements TemplateService {
         return execute_internal(new StringWriter(), reader, UUID.randomUUID().toString(), scopes).toString();
     }
 
-    private Writer execute_internal(final Writer writer, final Reader reader, final String templateName, final Object scope) throws IOException {
-        final MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile(reader, templateName);
-        mustache.execute(writer, scope);
-        writer.flush();
-        return writer;
-    }
-
     private Writer execute_internal(final Writer writer, final Reader reader, final String templateName, final Object[] scopes) throws IOException {
-        final MustacheFactory mf = new DefaultMustacheFactory();
+        final MustacheFactory mf = new CustomMustacheFactory();
         Mustache mustache = mf.compile(reader, templateName);
         mustache.execute(writer, scopes);
         writer.flush();
         return writer;
     }
 
-    private Reader getTemplate(final String templateName) {
-        final InputStream stream = this.getClass().getResourceAsStream(templateName);
-        return new InputStreamReader(stream, Charset.forName("UTF-8"));
+    private Writer execute_internal(final Writer writer, final TemplateResolver resolver, final String templateName, final Object[] scopes) throws IOException {
+        final MustacheFactory mf = new CustomMustacheFactory(resolver);
+        Mustache mustache = mf.compile(templateName);
+        mustache.execute(writer, scopes);
+        writer.flush();
+        return writer;
     }
+
+    private Object[] toArray(final Object scope) {
+        return (scope != null) ? new Object[] { scope } : null;
+    }
+
 }
