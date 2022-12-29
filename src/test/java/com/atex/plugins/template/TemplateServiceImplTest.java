@@ -22,7 +22,7 @@ public class TemplateServiceImplTest {
     @Test
     public void testSimpleScope() throws IOException {
         final String templateName = "/mustache/simpleScope.hbs";
-        final Map<String, String> scope = Maps.newHashMap();
+        final Map<String, String> scope = new HashMap<>();
         scope.put("name", "marco");
 
         final String result = service.execute(templateName, scope);
@@ -71,7 +71,7 @@ public class TemplateServiceImplTest {
 
     private class TestTemplateResolver implements TemplateResolver {
 
-        Map<String, String> contents = Maps.newHashMap();
+        Map<String, String> contents = new HashMap<>();
 
         public TestTemplateResolver() {
             contents.put("sendto.mail.default", "pippo {{>sendto.mail.collection}}");
@@ -113,7 +113,7 @@ public class TemplateServiceImplTest {
     }
 
     private class UserList {
-        private List<User> users = Lists.newArrayList();
+        private List<User> users = new ArrayList<>();
 
         public List<User> getUsers() {
             return users;
