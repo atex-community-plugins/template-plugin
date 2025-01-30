@@ -3,6 +3,8 @@ package com.atex.plugins.template;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,9 +12,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TemplateServiceImplTest {

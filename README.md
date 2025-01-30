@@ -8,7 +8,7 @@ In order for the plugin to be available you need to add the configuration depend
   <dependency>
     <groupId>com.atex.plugins</groupId>
     <artifactId>template-plugin</artifactId>
-    <version>1.0</version>
+    <version>1.2</version>
   </dependency>
 
 ```
@@ -30,7 +30,7 @@ where `/mustache/simpleScope.hbs` is stored in your resources folder and it may 
 Hello {{name}}
 ```
 ## Polopoly Version
-10.16.3-fp3
+11.2.1
 
 ## Code Status
 The code in this repository is provided with the following status: **EXAMPLE**
