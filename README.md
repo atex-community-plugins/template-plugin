@@ -8,7 +8,7 @@ In order for the plugin to be available you need to add the configuration depend
   <dependency>
     <groupId>com.atex.plugins</groupId>
     <artifactId>template-plugin</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
   </dependency>
 
 ```
@@ -29,6 +29,39 @@ where `/mustache/simpleScope.hbs` is stored in your resources folder and it may 
 ```
 Hello {{name}}
 ```
+
+You can also create a helper utility that use `TemplateCurrentContext.get()` like this:
+
+```java
+public class TemplateHelper {
+
+    public String extractText() {
+        return extractText(TemplateCurrentContext.get());
+    }
+
+    public String extractText(final Object value) {
+        if (value instanceof StructuredText) {
+            String text = ((StructuredText) value).getText();
+            return text != null ? text : "";
+        }
+        return value != null ? value.toString() : "";
+    }
+
+}
+```
+
+that must be added to the scope when executing the template:
+
+```
+data.put("helper", new TemplateHelper());
+```
+
+and in the template you can use it like this:
+
+```
+{{#name}}{{helper.extractText}}{{/name}}
+```
+
 ## Polopoly Version
 11.2.1
 
